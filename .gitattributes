@@ -1,0 +1,2 @@
+# don't detect html files
+*.html linguist-detectable=false
