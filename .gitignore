@@ -1,2 +1,4 @@
-# Project exclude paths
-/out/
+# ignore output files
+file-to-text/*
+# ignore zip archieves
+*.zip
