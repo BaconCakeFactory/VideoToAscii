@@ -46,11 +46,11 @@ Python Script that turns a video or image into ascii art
 - enter resolution (width) in characters -> default is 150 characters
 - select if you want compression
 
-- the finished file will be saved as .html under "videoToAscii/file-to-text", which you can run in your favored webbrowser.
+- the finished file will be saved as .html under "videoToAscii/file-to-text", which you can run in your favored web browser.
 
 ### Keep in mind!
 
 - this program does not contain a "good" compression algorithm, there is a chance of getting a larger output file if you choose to compress it.
 - if the file you want to convert contains a lot of same-colored pixels, i.e. a picture of the moon which is mostly black, the compression may work.
-- I might add an suitable algorithm later :)
+- I might add a suitable algorithm later :)
 - thanks for trying my program :) David - nov 2022
