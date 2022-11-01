@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <style>
+            html, body, p {
+                margin: 0px;
+                padding: 0px;
+                font-family: 'Courier';
+                font-size: 10px;
+                line-height: 5.45px;
+                background-color: whitesmoke;
+            }
+            #image {
+                width: 100%;
+                text-align: center;
+            }
+            #title, #controls {
+                font-size: larger;
+                text-align: center;
+                width: 100%;
+                padding: 1px 0px;
+            }
+            #controls > h2:hover {
+                cursor: pointer;
+            }
+            .noselect {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Old versions of Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+            }
+        </style>
+    </head>
+    <body onload="main()">
+        <script>
+            // for checking if element was ever centered
+            var initial_center = false;
+            function center() {
+                if(!initial_center)
+                    setTitle();             // set title
+                                
+                var ww = window.innerWidth;                         // get website width
+                var wh = window.innerHeight;                        // get website height
+                
+                var title = document.getElementById("title");       // get title element
+                var th = title.clientHeight;
+                
+                var im_elem = document.getElementById("image");     // reference to html object
+                var ih = im_elem.clientHeight;                      // get video height
+                
+                var ctrl_elem = document.getElementById("controls");// reference to html object
+                var ch = ctrl_elem.clientHeight;
+
+                var combined_height = th + ih + ch;
+
+                title.style.marginTop = ((wh - combined_height) / 2) + "px";   // offset to top screen border to center video
+            }
+
+            function setTitle() {
+                var url = window.location.pathname;
+                var title = url.split("/").at(-1);
+                title = title.split("--runtime")[0];
+                title = title.replaceAll("-", " ");
+                document.title = title;
+                document.getElementById("titleh2").innerHTML = title;
+            }
+
+            var paused = false;
+            function pause() {
+                paused = !paused;
+                if (paused)
+                    document.getElementById("pause_button").innerHTML = "click to continue"
+                else
+                    document.getElementById("pause_button").innerHTML = "click to pause"
+            }
+
+            // reposition video to center if window is resized
+            window.addEventListener('resize', function(event) { center(); }, true);
+            // frame array
+            var frames = [VAR_frames_js_VAR];   // set in python
+            // i and j: frame counter, last frame in array
+            var i = 0;
+            var l = VAR_frames_len_VAR;                 // set in python
+            var frame_width = VAR_frames_width_VAR;     // set in python
+            var frame_height = VAR_frames_height_VAR;   // set in python
+            var compressed = VAR_compressed_VAR;        // set in python
+            
+            function build_frame(frame) {
+                var frame_string = "";
+
+                var chars = frame.split("*");
+
+                for (var i = 0; i < chars.length - 1; i++) {
+                    var char = chars[i].charAt(0);
+                    var number = parseInt(chars[i].slice(1));
+
+                    for(var j = 0; j < number; j++) {
+                        frame_string += char;
+                    }
+                }
+
+                var frame_str_brs = "";
+
+                for (var i = 0; i < frame_height; i++) {
+                    frame_str_brs += "<br>";
+                    frame_str_brs += frame_string.slice(i * frame_width, (i + 1) * frame_width);
+                }
+
+                return "<p>" + frame_str_brs.slice(4) +"</p>";
+            }
+
+            function loop() {
+                // put html element into variable
+                var im_elem = document.getElementById("image");
+                // loop through frame array
+                if(i >= l) {i = 0; }
+                // delete previous frame
+                im_elem.innerHTML = '';
+                // check if array contains compressed data
+                if(compressed) {
+                    // set new frame (for compressed array)
+                    im_elem.insertAdjacentHTML('beforeend', build_frame(frames[i]));
+                } else {
+                    // set new frame (for non-compressed array)
+                    im_elem.insertAdjacentHTML('beforeend', frames[i]);
+                }
+                // count up for next frame
+                i++;
+                // if video is not centered, center it
+                if(!initial_center) { center(); initial_center = true;}
+            }
+            
+            function main() {
+                if(frames.length > 1) {
+                    setInterval(function(){
+                        if(!paused) {
+                            loop();
+                        }
+                    }, 30); // set in python
+                } else {
+                    document.getElementById("pause_button").style.display = "none";
+                    loop();
+                }
+            }
+
+            
+        </script>
+        <div id="content">
+            <div id="title"><h2 id="titleh2"></h2></div>
+            <div id='image'></div>
+            <div id='controls'><h2 class="noselect" id="pause_button" onclick="pause()">click to pause</h2></div>
+        </div>
+    </body>
+</html>
