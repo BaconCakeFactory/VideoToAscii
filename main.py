@@ -1,10 +1,13 @@
-import os.path
+import os
+import sys
+import subprocess
 import tkinter
 from tkinter import filedialog
 import cv2
 import math
 from datetime import datetime
 from progress.bar import ShadyBar
+
 
 start_time = datetime.now()
 path_to_file = ""
@@ -153,7 +156,16 @@ def safe_to_html(output: list) -> None:
     new_file.write(create_html_string_from_template(output))
     new_file.close()
     # show final file
-    os.startfile(save_path)
+    open_file(save_path)
+
+
+def open_file(filename):
+    # from https://stackoverflow.com/questions/17317219/is-there-an-platform-independent-equivalent-of-os-startfile
+    if sys.platform == "win32":
+        os.startfile(filename)
+    else:
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, filename])
 
 
 def create_html_string_from_template(frames: list) -> str:
