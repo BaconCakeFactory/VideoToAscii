@@ -43,10 +43,14 @@
 - from your terminal: navigate to "videoToAscii" folder
 - run command: **$ python3 main.py**
 
+&nbsp;
+
 - enter resolution (width) in characters -> default is 150 characters
 - select if you want compression
 
-- the finished file will be saved as .html under "videoToAscii/file-to-text", which you can run in your favored web browser.
+&nbsp;
+
+- the finished file will be saved as .html under "VideoToAscii/file-to-text", which you can run in your favored web browser.
 
 ### Keep in mind!
 
