@@ -152,7 +152,7 @@ def safe_to_html(output: list) -> None:
         os.mkdir(save_path)
 
     # create new html file and write html code into it
-    new_file = open(os.path.join(save_path, make_filename()), "w", encoding="utf-8")
+    new_file = open(uniquify(os.path.join(save_path, make_filename())), "w", encoding="utf-8")
     new_file.write(create_html_string_from_template(output))
     new_file.close()
     # show final file
@@ -209,7 +209,20 @@ def get_runtime() -> str:
 
 
 def make_filename() -> str:
-    return get_filename() + "-(x" + str(width) + ")--runtime-" + get_runtime() + "s.html"
+    file_name = get_filename() + "-(x" + str(width) + ")--runtime-" + get_runtime() + "s.html"
+    return file_name
+
+
+def uniquify(path):
+    # from https://stackoverflow.com/a/57896232
+    filename, extension = os.path.splitext(path)
+    counter = 1
+
+    while os.path.exists(path):
+        path = filename + " (" + str(counter) + ")" + extension
+        counter += 1
+
+    return path
 
 
 def get_user_input() -> None:
