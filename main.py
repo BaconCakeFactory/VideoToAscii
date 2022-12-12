@@ -209,7 +209,7 @@ def get_runtime() -> str:
 
 
 def make_filename() -> str:
-    return get_filename() + "--runtime-" + get_runtime() + "s.html"
+    return get_filename() + "-(x" + str(width) + ")--runtime-" + get_runtime() + "s.html"
 
 
 def get_user_input() -> None:
