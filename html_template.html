@@ -8,6 +8,7 @@
                 font-size: 10px;
                 line-height: 5.45px;
                 background-color: whitesmoke;
+                white-space: pre;
             }
             #image {
                 width: 100%;
@@ -41,21 +42,25 @@
                 if(!initial_center)
                     setTitle();             // set title
                                 
-                var ww = window.innerWidth;                         // get website width
-                var wh = window.innerHeight;                        // get website height
+                var ww = window.innerWidth;                             // get website width
+                var wh = window.innerHeight;                            // get website height
                 
-                var title = document.getElementById("title");       // get title element
+                var title = document.getElementById("title");           // get title element
                 var th = title.clientHeight;
                 
-                var im_elem = document.getElementById("image");     // reference to html object
-                var ih = im_elem.clientHeight;                      // get video height
+                var im_elem = document.getElementById("image");         // reference to html object
+                var ih = im_elem.clientHeight;                          // get video height
                 
-                var ctrl_elem = document.getElementById("controls");// reference to html object
+                var ctrl_elem = document.getElementById("controls");    // reference to html object
                 var ch = ctrl_elem.clientHeight;
 
                 var combined_height = th + ih + ch;
 
-                title.style.marginTop = ((wh - combined_height) / 2) + "px";   // offset to top screen border to center video
+                var m_top = ((wh - combined_height) / 2);
+
+                if (m_top <= 0) {m_top = 0;}                             // set lowest margin to 0
+
+                title.style.marginTop = m_top + "px";   // offset to top screen border to center video
             }
 
             function setTitle() {
