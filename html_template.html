@@ -6,10 +6,15 @@
                 padding: 0px;
                 font-family: 'Courier';
                 white-space: pre;
+                overflow: hidden;
+                top: 0px;
+                left: 0px;
             }
             #image {
+                top: 0px;
                 width: 100%;
                 text-align: center;
+                position: absolute;
             }
             #title, #controls, #color_controls {
                 font-size: larger;
@@ -93,9 +98,8 @@
                 var combined_height = ih + ch;
                 var m_top = (wh - combined_height) / 2;
 
-                if (m_top <= 0) {m_top = 0;}                             // set lowest margin to 0
-
-                //im_elem.style.marginTop = m_top + "px";   // offset to top screen border to center video
+                
+                im_elem.style.marginTop = m_top + "px";   // offset to top screen border to center video
             }
 
             function setTitle() {
@@ -225,20 +229,19 @@
             }
             
         </script>
-        <div id="content">
-            <div id="title"><h2 id="titleh2"></h2></div>
-            <div id='image'></div>
-            <div id='controls'><h2 class="noselect" id="pause_button" onclick="pause()">click to pause</h2></div>
-            <div id='color_controls'>
-                <h2>font: </h2>
-                <input type="color" id="fontc" value="#000000" onchange="colorChange()">
-                <h2> background: </h2>
-                <input type="color" id="backc" value="#ffffff" onchange="colorChange()">
-                <h2> size: </h2>
-                <h2 class="size" id="sizeup" onclick="sizeUp()">+</h2>
-                <h2> / </h2>
-                <h2 class="size" id="sizedown" onclick="sizeDown()">-</h2>
-            </div>
+        <div id="title"><h2 id="titleh2"></h2></div>
+        
+        <div id='image'></div>
+        <div id='controls'><h2 class="noselect" id="pause_button" onclick="pause()">click to pause</h2></div>
+        <div id='color_controls'>
+            <h2>font: </h2>
+            <input type="color" id="fontc" value="#000000" onchange="colorChange()">
+            <h2> background: </h2>
+            <input type="color" id="backc" value="#ffffff" onchange="colorChange()">
+            <h2> size: </h2>
+            <h2 class="size" id="sizeup" onclick="sizeUp()">+</h2>
+            <h2> / </h2>
+            <h2 class="size" id="sizedown" onclick="sizeDown()">-</h2>
         </div>
     </body>
 </html>
