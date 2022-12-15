@@ -7,14 +7,13 @@
                 font-family: 'Courier';
                 font-size: 10px;
                 line-height: 5.45px;
-                background-color: whitesmoke;
                 white-space: pre;
             }
             #image {
                 width: 100%;
                 text-align: center;
             }
-            #title, #controls {
+            #title, #controls, #color_controls {
                 font-size: larger;
                 text-align: center;
                 width: 100%;
@@ -31,6 +30,29 @@
                 -ms-user-select: none; /* Internet Explorer/Edge */
                 user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+            }
+            #title {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+            #color_controls {
+                display: flex;
+                flex-basis: content;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+            input[type="color"] {
+                -webkit-appearance: none;
+                border: none;
+                width: 28px;
+                height: 28px;
+                background-color: transparent;
+            }
+            input[type="color"]::-webkit-color-swatch-wrapper {
+                padding: 0;
+            }
+            input[type="color"]::-webkit-color-swatch {
+                border: none;
             }
         </style>
     </head>
@@ -150,12 +172,27 @@
                 }
             }
 
+            function colorChange() {
+                // set body background color to color input value
+                document.body.style.color = document.getElementById("fontc").value;
+
+                // set body background color to color input value
+                document.body.style.backgroundColor = document.getElementById("backc").value;
+
+                console.log("cc");
+            }
             
         </script>
         <div id="content">
             <div id="title"><h2 id="titleh2"></h2></div>
             <div id='image'></div>
             <div id='controls'><h2 class="noselect" id="pause_button" onclick="pause()">click to pause</h2></div>
+            <div id='color_controls'>
+                <h2>font: </h2>
+                <input type="color" id="fontc" value="#000000" onchange="colorChange()">
+                <h2> background: </h2>
+                <input type="color" id="backc" value="#ffffff" onchange="colorChange()">
+            </div>
         </div>
     </body>
 </html>
