@@ -5,8 +5,6 @@
                 margin: 0px;
                 padding: 0px;
                 font-family: 'Courier';
-                font-size: 10px;
-                line-height: 5.45px;
                 white-space: pre;
             }
             #image {
@@ -18,6 +16,8 @@
                 text-align: center;
                 width: 100%;
                 padding: 1px 0px;
+                font-size: 10px;
+                line-height: 5.45px;
             }
             #controls > h2:hover {
                 cursor: pointer;
@@ -32,9 +32,13 @@
                                     supported by Chrome, Edge, Opera and Firefox */
             }
             #title {
+                position: fixed;
+                top: 0px;
                 background-color: rgba(0, 0, 0, 0.1);
             }
             #color_controls {
+                position: fixed;
+                bottom: 0px;
                 display: flex;
                 flex-basis: content;
                 align-items: center;
@@ -54,6 +58,17 @@
             input[type="color"]::-webkit-color-swatch {
                 border: none;
             }
+            .size {
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            .size:hover {
+                cursor: pointer;
+            }
+            .size:active {
+                color: white;
+            }
+
         </style>
     </head>
     <body onload="main()">
@@ -68,7 +83,6 @@
                 var wh = window.innerHeight;                            // get website height
                 
                 var title = document.getElementById("title");           // get title element
-                var th = title.clientHeight;
                 
                 var im_elem = document.getElementById("image");         // reference to html object
                 var ih = im_elem.clientHeight;                          // get video height
@@ -76,13 +90,12 @@
                 var ctrl_elem = document.getElementById("controls");    // reference to html object
                 var ch = ctrl_elem.clientHeight;
 
-                var combined_height = th + ih + ch;
-
-                var m_top = ((wh - combined_height) / 2);
+                var combined_height = ih + ch;
+                var m_top = (wh - combined_height) / 2;
 
                 if (m_top <= 0) {m_top = 0;}                             // set lowest margin to 0
 
-                title.style.marginTop = m_top + "px";   // offset to top screen border to center video
+                //im_elem.style.marginTop = m_top + "px";   // offset to top screen border to center video
             }
 
             function setTitle() {
@@ -114,6 +127,9 @@
             var frame_height = VAR_frames_height_VAR;   // set in python
             var compressed = VAR_compressed_VAR;        // set in python
             
+            var default_font_size;
+            var default_line_height;
+
             function build_frame(frame) {
                 var frame_string = "";
 
@@ -170,6 +186,14 @@
                     document.getElementById("pause_button").style.display = "none";
                     loop();
                 }
+
+                // initialize font size for size change
+                default_font_size = 10;
+
+                // initialize line height for size change
+                default_line_height = 5.45;
+
+                resizeIm();
             }
 
             function colorChange() {
@@ -178,8 +202,26 @@
 
                 // set body background color to color input value
                 document.body.style.backgroundColor = document.getElementById("backc").value;
+            }
+            
+            function sizeUp() { 
+                default_font_size *= 1.1; 
+                default_line_height *= 1.1;
+                resizeIm(); 
+            }
 
-                console.log("cc");
+            function sizeDown() { 
+                if(default_font_size >= 1) { 
+                    default_font_size *= 0.9;
+                    default_line_height *= 0.9; 
+                    resizeIm(); 
+                } 
+            }
+
+            function resizeIm() {
+                document.getElementById("image").style.fontSize = default_font_size + "px";
+                document.getElementById("image").style.lineHeight = default_line_height + "px";
+                center();
             }
             
         </script>
@@ -192,6 +234,10 @@
                 <input type="color" id="fontc" value="#000000" onchange="colorChange()">
                 <h2> background: </h2>
                 <input type="color" id="backc" value="#ffffff" onchange="colorChange()">
+                <h2> size: </h2>
+                <h2 class="size" id="sizeup" onclick="sizeUp()">+</h2>
+                <h2> / </h2>
+                <h2 class="size" id="sizedown" onclick="sizeDown()">-</h2>
             </div>
         </div>
     </body>
