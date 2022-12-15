@@ -5,7 +5,6 @@
                 margin: 0px;
                 padding: 0px;
                 font-family: 'Courier';
-                white-space: pre;
                 overflow: hidden;
                 top: 0px;
                 left: 0px;
@@ -15,6 +14,7 @@
                 width: 100%;
                 text-align: center;
                 position: absolute;
+                white-space: pre;
             }
             #title, #controls, #color_controls {
                 font-size: larger;
@@ -23,6 +23,7 @@
                 padding: 1px 0px;
                 font-size: 10px;
                 line-height: 5.45px;
+                white-space: pre;
             }
             #controls > h2:hover {
                 cursor: pointer;
@@ -40,6 +41,10 @@
                 position: fixed;
                 top: 0px;
                 background-color: rgba(0, 0, 0, 0.1);
+            }
+            #controls {
+                position: absolute;
+                top: 0px;
             }
             #color_controls {
                 position: fixed;
@@ -62,10 +67,6 @@
             }
             input[type="color"]::-webkit-color-swatch {
                 border: none;
-            }
-            .size {
-                -webkit-user-select: none;
-                user-select: none;
             }
             .size:hover {
                 cursor: pointer;
@@ -99,7 +100,8 @@
                 var m_top = (wh - combined_height) / 2;
 
                 
-                im_elem.style.marginTop = m_top + "px";   // offset to top screen border to center video
+                im_elem.style.marginTop = m_top + "px";     // offset to top screen border to center video
+                ctrl_elem.style.marginTop = (m_top + ih) + "px";      // offset control element by height of image
             }
 
             function setTitle() {
@@ -239,9 +241,9 @@
             <h2> background: </h2>
             <input type="color" id="backc" value="#ffffff" onchange="colorChange()">
             <h2> size: </h2>
-            <h2 class="size" id="sizeup" onclick="sizeUp()">+</h2>
+            <h2 class="size noselect" id="sizeup" onclick="sizeUp()">+</h2>
             <h2> / </h2>
-            <h2 class="size" id="sizedown" onclick="sizeDown()">-</h2>
+            <h2 class="size noselect" id="sizedown" onclick="sizeDown()">-</h2>
         </div>
     </body>
 </html>
