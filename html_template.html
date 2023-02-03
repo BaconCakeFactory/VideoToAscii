@@ -40,7 +40,7 @@
             #title {
                 position: fixed;
                 top: 0px;
-                background-color: rgba(0, 0, 0, 0.1);
+                background-color: rgba(255, 255, 255, 0.1);
             }
             #controls {
                 position: absolute;
@@ -53,7 +53,7 @@
                 flex-basis: content;
                 align-items: center;
                 justify-content: center;
-                background-color: rgba(0, 0, 0, 0.1);
+                background-color: rgba(255, 255, 255, 0.1);
             }
             input[type="color"] {
                 -webkit-appearance: none;
@@ -204,7 +204,7 @@
 
             function colorChange() {
                 // set body background color to color input value
-                document.body.style.color = document.getElementById("fontc").value;
+                document.getElementById("image").style.color = document.getElementById("fontc").value;
 
                 // set body background color to color input value
                 document.body.style.backgroundColor = document.getElementById("backc").value;
@@ -225,8 +225,9 @@
             }
 
             function resizeIm() {
-                document.getElementById("image").style.fontSize = default_font_size + "px";
-                document.getElementById("image").style.lineHeight = default_line_height + "px";
+                var im = document.getElementById("image");
+                im.style.fontSize = default_font_size + "px";
+                im.style.lineHeight = default_line_height + "px";
                 center();
             }
             
